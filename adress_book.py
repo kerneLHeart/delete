@@ -86,6 +86,13 @@ while True:
 
     elif vvod == 4:
 
+    elif vvod == 5:
+
+    elif vvod == 6:
+        print("Выход из программмы")
+        break
+
+
 
 
 
