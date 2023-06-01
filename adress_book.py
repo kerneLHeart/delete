@@ -87,6 +87,7 @@ while True:
     elif vvod == 4:
 
     elif vvod == 5:
+        pass
 
     elif vvod == 6:
         print("Выход из программмы")
