@@ -13,7 +13,7 @@ def menu():
 def check_name():
     i = False
     while not i:  # Цикл будет выполняться пока i не станет True
-        name = input('Введите имя ')
+        name = input('Введите имя: ')
         if re.findall(r'\d',name) == []:  # re.findall(r'\d', name) вернет список из цифр которые используються в значении переменой name, если цифры не использовались вернеться пустой список
             i = True
             return name
@@ -23,7 +23,7 @@ def check_name():
 def check_number():
     i = False
     while not i:
-        number = input('Введите номер ')
+        number = input('Введите номер: ')
         if re.findall(r'\D',number) == []:  # re.findall(r'\D', name) вернет список из букв которые используються в значении переменой number, если цифры не использовались вернеться пустой список
             i = True
             return number
@@ -47,22 +47,36 @@ class book:
 
     def dell(self,ud):
         self.ud = ud
-        print("Пользователь {0} удален ".format(book.content_book.pop(self.ud)))
+        print("Пользователь удален ".format(book.content_book.pop(self.ud)))
         print("\n")
+
+    def izmenit(self,new_name,new_number):
+        self.new_name = new_name
+        self.new_number = new_number
+        book.content_book[self.new_name] = self.new_number
+        print("Номер пользователя {0} изменен с {1} на {2}".format(self.name,self.number, self.new_number))
+        print()
+
+    def findal_user(self,names):
+        self.names = names
+        print("Номер пользователя {0}: {1}".format(self.names,book.content_book.get(self.names)))
+        print()
 
 while True:
     menu()
     try:
-        vvod = int(input("\n Выберите цифру: "))
+        vvod = int(input("\nВыберите цифру: "))
         print()
         if vvod > 6:
-            print("Число не может быть больше 6, введите число сново")
+            print("Число не может быть больше 6, введите число сново\n")
         else:
             pass
     except:
-        print("Это не число, введите число")
+        print("Это не число, введите число\n")
+        continue
 
     if vvod == 1:
+        global vvod_name
         vvod_name = check_name()
         vvod_number = check_number()
         print()
@@ -78,34 +92,39 @@ while True:
            print("Адресная книга пуста, сначала заполните ее в пункте [1]\n")
 
     elif vvod == 3:
-        udalit = input("Введите имя пользователя которого надо удалить: ")
-        try:
-            p.dell(udalit)
-        except NameError:
+        if (len(book.content_book) == 0):
             print("Адресная книга пуста, сначала заполните ее в пункте [1]\n")
+        else:
+            print("Введите имя пользователя, которого надо удалить: ")
+            udalit = check_name()
+            if udalit in book.content_book.keys():
+                p.dell(udalit)
+            else:
+                print("Такого пользователя не существует!\nВведите существующего пользователя: ")
+                udalit = check_name()
 
     elif vvod == 4:
+        if (len(book.content_book) == 0):
+            print("Адресная книга пуста, сначала заполните ее в пункте [1]\n")
+        else:
+            print("Введите имя пользователя, номер которого надо изменить: ")
+            izmena_name = check_name()
+            print(("Введите новый номер: "))
+            izmena_number = check_number()
+            p.izmenit(izmena_name,izmena_number)
+
 
     elif vvod == 5:
-        pass
+        if (len(book.content_book) == 0):
+            print("Адресная книга пуста, сначала заполните ее в пункте [1]\n")
+        else:
+            print("Введите имя пользователя/ей номера, которых нужно найти: ")
+            find_us = check_name()
+            try:
+                p.findal_user(find_us)
+            except NameError:
+                print("Адресная книга пуста, сначала заполните ее в пункте [1]\n")
 
     elif vvod == 6:
-        print("Выход из программмы")
+        print("Программа завершена")
         break
-
-
-
-
-
-
-
-
-
-
-#to do
-# 1) Одному ключу соответствует несколько значений
-# 2) Одинаковые переменные ключ:значение
-
-#p = book(vvod_name,vvod_number)
-#p.add_user()
-#p.view_all()
