@@ -1,6 +1,8 @@
 import re
 
+
 global p
+global vvod_name
 def menu():
     print("Выберите пункт: ")
     print("[1] добавить пользователя в книгу ")
@@ -39,11 +41,19 @@ class book:
         book.content_book[self.name] = self.number
 
     def add_user(self):
+        f = open("Address_book.txt", 'a')  # открываем для записи (writing)
+        f.write(self.name + ":" + self.number + "\n")  # записываем текст в файл
+        f.close()
         print("Добавлен абонент с именем {} и номером {}".format(self.name, self.number))
 
-    def view_all(self):
-        print("Вся информация адресной книги: \n", book.content_book.items())
-        print("\n")
+    # def view_all(self):
+    #     f = open("Address_book.txt", "r")
+    #     while True:
+    #         line = f.readline()
+    #         if len(line) == 0:  # Нулевая длина обозначает конец файла (EOF)
+    #             break
+    #         print(line, end='')
+    #     f.close()
 
     def dell(self,ud):
         self.ud = ud
@@ -76,20 +86,23 @@ while True:
         continue
 
     if vvod == 1:
-        global vvod_name
         vvod_name = check_name()
         vvod_number = check_number()
         print()
-        p = book(vvod_name, vvod_number)
+        p = book(vvod_name, vvod_number) # p = book(vvod_name, vvod_number) определение P
         p.add_user()
         print()
 
 
     elif vvod == 2:
-       try:
-           p.view_all()
-       except NameError:
-           print("Адресная книга пуста, сначала заполните ее в пункте [1]\n")
+        f = open("Address_book.txt", "r")
+        while True:
+            line = f.readline()
+            if len(line) == 0:  # Нулевая длина обозначает конец файла (EOF)
+                break
+            print(line, end='')
+        f.close()
+        print()
 
     elif vvod == 3:
         if (len(book.content_book) == 0):
